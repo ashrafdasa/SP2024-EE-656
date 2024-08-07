@@ -10,7 +10,7 @@ Time taken: 0.058 seconds
 hive (airlineanalytics)> 
 
 
-###################################################################################
+##################################### a. Count the number of rows in each table. ##############################################
 
   
 hive (airlineanalytics)> select count(id) from airlines;
