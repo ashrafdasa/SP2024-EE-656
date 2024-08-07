@@ -10,7 +10,7 @@ OK
 Time taken: 0.058 seconds
 hive (airlineanalytics)> 
 
-#################################################################
+#############################   c. Find the total departure delay for each airline.  ####################################
 
 
 
