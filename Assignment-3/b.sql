@@ -9,7 +9,7 @@ OK
 Time taken: 0.058 seconds
 hive (airlineanalytics)> 
 
-#################################################################
+###########################   b. Display the first 10 records from each table.  ######################################
 
 hive (airlineanalytics)> select * from airlines limit 10;
 OK
@@ -27,7 +27,7 @@ Time taken: 0.205 seconds, Fetched: 10 row(s)
 
 
 
-#################################################################
+###########################   b. Display the first 10 records from each table.   ######################################
 
 hive (airlineanalytics)> select * from airports limit 10;
 OK
@@ -45,7 +45,7 @@ Time taken: 0.198 seconds, Fetched: 10 row(s)
 hive (airlineanalytics)> 
 
 
-#################################################################
+###########################  b. Display the first 10 records from each table.  ######################################
 hive (airlineanalytics)> select * from flights limit 10;
 OK
 2015	1	1	4	AS        	98	N407AS	ANC	SEA	5	2354	-11	21	15	205	194	169	1448	404	4	430	408	-22	0	0	          	          	          	          	          	          
