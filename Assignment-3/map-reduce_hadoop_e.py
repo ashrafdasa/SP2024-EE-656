@@ -1,9 +1,5 @@
+######################### e. List the top 5 busiest airports by the number of departures. ##############################
 
-###################  e. List the top 5 busiest airports by the number of departures. ###################  
-
-
-
- 
 from mrjob.job import MRJob
 from mrjob.step import MRStep
 import numpy as np
@@ -13,44 +9,56 @@ class solution(MRJob):
         return [
             MRStep(
                 mapper=self.mapper,
-                reducer=self.reducer), 
-            
-            MRStep(
-                mapper=self.mapper2,
-                reducer=self.reducer2), 
+                reducer=self.reducer
+                ), 
+            MRStep( 
+                reducer=self.reducer2
+                ),  
             ]
-    def mapper(self, _, line):
-        uniqId = "0"
-        tbleName = ""
-        fields = line.split('\t') 
-        if(len(fields) == 4): 
-            tbleName = "A" #"u.data"
-            uniqId = fields[0] 
-            yield uniqId,(tbleName,1)
-        else:
-            fields = line.split('|') 
-            tbleName = "B"  # u.user tbl
-            gender = fields[2]
-            uniqId = fields[0]
-            if(gender == 'F'):  
-                yield uniqId,(tbleName,gender)
+    def mapper(self, _, line): 
+        fields = line.split(',')  
+        Origin_Airport = fields[7]
+        yield Origin_Airport,1
          
-    def reducer(self, key, values): 
-        records = list(values)
-        a_records = [v for v in records if v[0] == 'A']
-        b_records = [v for v in records if v[0] == 'B'] 
-        for a_record in a_records: # Perform the right join
-            if b_records:
-                for b_record in b_records:
-                    yield key, (str(a_record[1]) + b_record[1])
-            
-            
-    def mapper2(self, id, name):  
-        yield name,1 
-    def reducer2(self, key, values):   
-        yield key, sum(values) 
-    
+    def reducer(self, key, values):  
+        yield None, (int(sum(values)),key)
+               
+    def reducer2(self, key, values):  
+        self.alist = []
+        for value in values: 
+            self.alist.append(value)
+        
+        self.blist = []
+        for i in range(5):
+            self.blist.append(max(self.alist))
+            self.alist.remove(max(self.alist))
 
+        for i in range(5):
+            yield self.blist[i]
+                
 if __name__ == '__main__': 
     solution.run()  
-    
+
+
+
+
+
+
+-------------------------------------------------------------------
+
+hadoop@ashraf-VirtualBox:~/pywork/mapperWork/assignment-3$ /bin/python3 /home/hadoop/pywork/mapperWork/assignment-3/map-reduce_assignment-3-MR.py
+No configs found; falling back on auto-configuration
+No configs specified for inline runner
+Creating temp directory /tmp/map-reduce_hadoop_e.hadoop.20240808.031020.501265
+Running step 1 of 2...
+Running step 2 of 2...
+job output is in /tmp/map-reduce_hadoop_e.hadoop.20240808.031020.501265/output
+Streaming final output from /tmp/map-reduce_hadoop_e.hadoop.20240808.031020.501265/output...
+346836  "ATL"
+285884  "ORD"
+239551  "DFW"
+196055  "DEN"
+194673  "LAX"
+Removing temp directory /tmp/map-reduce_hadoop_e.hadoop.20240808.031020.501265...
+
+
