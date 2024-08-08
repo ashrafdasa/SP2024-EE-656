@@ -1,11 +1,5 @@
 
-
-
-
 ###################  i. Identify the airline with the most flights arriving at a specific airport.  ###################  
-
-
-
  
 from mrjob.job import MRJob
 from mrjob.step import MRStep
@@ -17,26 +11,26 @@ class solution(MRJob):
             MRStep(
                 mapper=self.mapper,
                 reducer=self.reducer), 
-            
             MRStep(
                 mapper=self.mapper2,
-                reducer=self.reducer2), 
+                reducer=self.reducer2),  
             ]
     def mapper(self, _, line):
         uniqId = "0"
         tbleName = ""
-        fields = line.split('\t') 
-        if(len(fields) == 4): 
-            tbleName = "A" #"u.data"
+        fields = line.split(',') 
+        if(len(fields) > 2):  
+            tbleName = "A" #flights"
+            uniqId = fields[4] 
+            depatureDelay = fields[11]
+            if depatureDelay is None:
+                depatureDelay = 0
+            yield uniqId,(tbleName,depatureDelay)
+        else: 
+            tbleName = "B"  # airlines tbl
+            name = fields[1]
             uniqId = fields[0] 
-            yield uniqId,(tbleName,1)
-        else:
-            fields = line.split('|') 
-            tbleName = "B"  # u.user tbl
-            gender = fields[2]
-            uniqId = fields[0]
-            if(gender == 'F'):  
-                yield uniqId,(tbleName,gender)
+            yield uniqId,(tbleName,name)
          
     def reducer(self, key, values): 
         records = list(values)
@@ -45,15 +39,19 @@ class solution(MRJob):
         for a_record in a_records: # Perform the right join
             if b_records:
                 for b_record in b_records:
-                    yield key, (str(a_record[1]) + b_record[1])
+                    if(a_record[1] == ''): 
+                        a_record[1] = 0
+                    a_record[1] = int(float(a_record[1]))
+                    yield b_record[1], a_record[1]
             
-            
-    def mapper2(self, id, name):  
-        yield name,1 
-    def reducer2(self, key, values):   
-        yield key, sum(values) 
-    
 
+    def mapper2(self, key, values):   
+        yield key, values 
+        
+
+    def reducer2(self, key, values):    
+        yield key, sum(values) 
+
+     
 if __name__ == '__main__': 
-    solution.run()  
-    
+    solution.run() 
