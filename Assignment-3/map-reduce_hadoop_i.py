@@ -55,3 +55,22 @@ class solution(MRJob):
      
 if __name__ == '__main__': 
     solution.run() 
+
+
+
+
+
+----------------------------------------------------------
+
+
+hadoop@ashraf-VirtualBox:~/pywork/mapperWork/assignment-3$ /bin/python3 /home/hadoop/pywork/mapperWork/assignment-3/map-reduce_assignment-3-MR.py
+No configs found; falling back on auto-configuration
+No configs specified for inline runner
+Creating temp directory /tmp/map-reduce_hadoop_e.hadoop.20240808.031020.501265
+Running step 1 of 2...
+Running step 2 of 2...
+job output is in /tmp/map-reduce_hadoop_e.hadoop.20240808.031020.501265/output
+Streaming final output from /tmp/map-reduce_hadoop_e.hadoop.20240808.031020.501265/output...
+WN        	1261855
+Removing temp directory /tmp/map-reduce_hadoop_e.hadoop.20240808.031020.501265...
+
