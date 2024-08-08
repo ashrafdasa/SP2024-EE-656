@@ -24,12 +24,12 @@ shellCommand = "python3 map-reduce_hadoop_f.py flights.csv airlines.csv"+ withHa
 
 
 # h. Find the top 5 flights with the longest arrival delays, including airline name and destination airport name.
-shellCommand = "python3 map-reduce_hadoop_h.py u.item "+ withHadoop  
+shellCommand = "python3 map-reduce_hadoop_h.py flights.csv airlines.csv "+ withHadoop  
 os.system(shellCommand)
 
 
 # i. Identify the airline with the most flights arriving at a specific airport.
-shellCommand = "python3 map-reduce_hadoop_i.py u.item "+ withHadoop  
+shellCommand = "python3 map-reduce_hadoop_i.py flights.csv airlines.csv"+ withHadoop  
 os.system(shellCommand)
 
  
